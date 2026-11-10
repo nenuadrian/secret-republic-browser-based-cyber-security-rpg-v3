@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/sitemap-index.xml

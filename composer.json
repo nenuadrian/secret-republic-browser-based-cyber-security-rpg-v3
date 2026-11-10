@@ -1,8 +1,15 @@
 {
-    "name": "nenuadrian/secretrepublic",
-    "description": "Version 3",
+    "name": "nenuadrian/secretrepublic-v3",
+    "description": "Secret Republic V3 - open source browser-based cyber security RPG with missions, servers, organizations and a world map. PHP + MySQL or SQLite.",
     "type": "project",
-    "homepage": "https://nenuadrian.com/",
+    "keywords": ["browser-game", "cyber-security", "rpg", "security-game", "php", "mysql", "sqlite", "game"],
+    "license": "MIT",
+    "homepage": "https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/",
+    "support": {
+        "issues": "https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/issues",
+        "source": "https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3",
+        "docs": "https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/"
+    },
     "authors": [
         {
             "name": "Adrian Nenu",
@@ -10,22 +17,27 @@
         }
     ],
     "require": {
-        "google/recaptcha": "^1.2",
+        "php": "^8.3",
+        "ext-gd": "*",
+        "ext-mysqli": "*",
+        "ext-pdo_sqlite": "*",
         "danielstjules/php-pretty-datetime": "dev-master",
-        "smarty/smarty": "^4.5.7",
-        "mobiledetect/mobiledetectlib": "^2.8",
+        "google/recaptcha": "^1.2",
+        "jbbcode/jbbcode": "^1.3",
         "joshcam/mysqli-database-class": "dev-master",
+        "mobiledetect/mobiledetectlib": "^2.8",
         "phpmailer/phpmailer": "^6.0",
-        "jbbcode/jbbcode": "^1.3"
-    },
-    "config": {
-        "vendor-dir": "includes/vendor"
+        "smarty/smarty": "^4.5.7"
     },
     "require-dev": {
-        "overtrue/phplint": "^5.3",
         "phpunit/phpunit": "^12.0"
     },
+    "config": {
+        "vendor-dir": "includes/vendor",
+        "sort-packages": true
+    },
     "scripts": {
+        "lint": "find includes public_html tests docker -name '*.php' -not -path 'includes/vendor/*' -print0 | xargs -0 -n1 -P4 php -d display_errors=stderr -d error_reporting=-1 -l 2>&1 >/dev/null | (! grep -v '^No syntax errors')",
         "test": "phpunit tests"
     }
 }

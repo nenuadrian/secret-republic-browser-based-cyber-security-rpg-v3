@@ -53,6 +53,23 @@ final class SqliteDbTest extends TestCase
         $this->assertSame(2, $id2);
     }
 
+    public function testOrWhereJoinsConditionsWithOr(): void
+    {
+        $this->db->insert('users', ['username' => 'alice', 'level' => 1]);
+        $this->db->insert('users', ['username' => 'bob', 'level' => 2]);
+        $this->db->insert('users', ['username' => 'carol', 'level' => 3]);
+
+        $rows = $this->db->where('username', 'alice')->orWhere('level', 3)->orderBy('id', 'ASC')->get('users');
+        $this->assertSame(['alice', 'carol'], array_column($rows, 'username'));
+
+        // The cron rankings job uses orWhere() inside an UPDATE
+        $this->db->where('id', 2)->orWhere('username = ?', ['carol'])->update('users', ['level' => 9]);
+        $this->assertSame(2, count($this->db->where('level', 9)->get('users')));
+
+        // State resets: the next query is a plain AND query again
+        $this->assertCount(1, $this->db->where('username', 'alice')->where('level', 1)->get('users'));
+    }
+
     public function testInsertInvalidPayloadReturnsFalse(): void
     {
         $result = $this->db->insert('users', []);

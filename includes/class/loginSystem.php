@@ -206,15 +206,25 @@ class LoginSystem extends Alpha
 
 
 
+  /**
+   * Check a password against a stored hash. Login has always used plain
+   * password_hash($password); password changes and resets used to store
+   * password_hash($password . $pin), which then could not log in. Both forms
+   * are accepted so those players get their accounts back.
+   */
+  function verifyPassword($password, $hash, $pin = '')
+  {
+    if (!$hash) return false;
+    return password_verify((string) $password, $hash)
+      || ($pin !== '' && $pin !== null && password_verify($password . $pin, $hash));
+  }
+
   function changeUserPassword($uid, $newPass, $pin = false)
   {
 	if (!$uid) return;
 
     $db = $this->container->db();
-    if (!$pin)
-      $pin = $db->where('uid', $uid)->getOne('user_credentials', 'pin')['pin'];
-
-    $hash = $this->generatePasswordHash($newPass, $pin);
+    $hash = password_hash($newPass, PASSWORD_DEFAULT);
 
     $db->where('uid', $uid)->update('user_credentials', array('password' => $hash), 1);
 
@@ -243,7 +253,11 @@ class LoginSystem extends Alpha
 
         if (!$this->container->errors)
           if ($userCredentials['group_id']) {
-            if ($socialLogin || password_verify($password , $userCredentials['password'])) {
+            if ($socialLogin || $this->verifyPassword($password, $userCredentials['password'], $userCredentials['pin'])) {
+              // Upgrade hashes written by the old password-change bug (password . pin)
+              if (!$socialLogin && !password_verify((string) $password, $userCredentials['password'])) {
+                $this->changeUserPassword($userData['id'], $password);
+              }
               $this->startUserSession($userData['id'], $username, $userCredentials, $ip);
 
               $_SESSION['voice'] = 'accessgranted';

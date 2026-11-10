@@ -1,0 +1,106 @@
+---
+/**
+ * Extends Starlight's <head> (title, description, canonical, Open Graph basics,
+ * sitemap) with a social preview image and schema.org structured data so the
+ * docs and the game show up well in search results and link previews.
+ */
+import Default from '@astrojs/starlight/components/Head.astro';
+
+const { entry, id, lastUpdated, siteTitle } = Astro.locals.starlightRoute;
+const site = Astro.site ?? new URL('https://nenuadrian.github.io');
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const pageUrl = new URL(Astro.url.pathname, site).href;
+const homeUrl = new URL(base, site).href;
+const ogImage = new URL(`${base}og-image.jpg`, site).href;
+const repo = 'https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3';
+const isHome = id === '' || id === 'index';
+const title = entry.data.title;
+const description = entry.data.description ?? '';
+
+const keywords = [
+	'Secret Republic',
+	'Secret Republic V3',
+	'cyber security game',
+	'cyber security simulator',
+	'security training game',
+	'browser-based game',
+	'cyber security RPG',
+	'open source PHP game',
+	'multiplayer strategy game',
+	'MySQL',
+	'SQLite',
+	'Docker',
+	'self-hosted game',
+].join(', ');
+
+const author = { '@type': 'Person', name: 'Adrian Nenu', url: 'https://github.com/nenuadrian' };
+
+const graph: Record<string, unknown>[] = [
+	{
+		'@type': 'WebSite',
+		'@id': `${homeUrl}#website`,
+		url: homeUrl,
+		name: `${siteTitle} documentation`,
+		description: 'Documentation for Secret Republic V3, the open source browser-based cyber security RPG.',
+		inLanguage: 'en',
+	},
+];
+
+if (isHome) {
+	graph.push(
+		{
+			'@type': 'VideoGame',
+			name: 'Secret Republic V3',
+			alternateName: 'Secret Republic - Cyber Security RPG (V3)',
+			description,
+			url: homeUrl,
+			image: ogImage,
+			genre: ['Role-playing game', 'Cyber security simulation', 'Strategy', 'Puzzle'],
+			gamePlatform: ['Web browser'],
+			playMode: 'MultiPlayer',
+			applicationCategory: 'GameApplication',
+			operatingSystem: 'Any (web browser)',
+			author,
+			license: 'https://opensource.org/licenses/MIT',
+			sameAs: [repo],
+			offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+		},
+		{
+			'@type': 'SoftwareSourceCode',
+			name: 'Secret Republic V3 source code',
+			codeRepository: repo,
+			programmingLanguage: ['PHP', 'JavaScript', 'SQL'],
+			runtimePlatform: 'PHP 8.5, MySQL 9.7 or SQLite, Docker',
+			license: 'https://opensource.org/licenses/MIT',
+			author,
+		},
+	);
+} else {
+	graph.push({
+		'@type': 'TechArticle',
+		headline: title,
+		description,
+		url: pageUrl,
+		image: ogImage,
+		inLanguage: 'en',
+		author,
+		isPartOf: { '@id': `${homeUrl}#website` },
+		...(lastUpdated ? { dateModified: lastUpdated.toISOString() } : {}),
+	});
+}
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<Default />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="Adrian Nenu" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Secret Republic logo: a glowing blue crown on a dark low-poly background" />
+<meta name="twitter:title" content={isHome ? siteTitle : `${title} · ${siteTitle}`} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<script type="application/ld+json" set:html={jsonLd} />

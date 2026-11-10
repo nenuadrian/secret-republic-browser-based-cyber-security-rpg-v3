@@ -6,9 +6,14 @@ require_once('class/Item.class.php');
 require("constants/skills.php");
 
 
+// While /setup installs the game tables, skip everything that queries them.
+$setupMode = defined('SR_SETUP_MODE');
+
 if ($container->has('cardinal')) {
   $cardinal = $container->get('cardinal');
-  $cardinal->loginSystem();
+  if (!$setupMode) {
+    $cardinal->loginSystem();
+  }
 }
 
 $container->myModals = array();
@@ -22,8 +27,8 @@ $db        = $container->has('db') ? $container->db() : null;
 $config    = $container->has('config') ? $container->config() : [];
 $user      = &$container->get('user');
 $logged    = &$container->logged;
-$uclass    = $container->has('cardinal') ? $container->uclass() : null;
-$taskclass = $container->has('cardinal') ? $container->taskclass() : null;
+$uclass    = $container->has('cardinal') && !$setupMode ? $container->uclass() : null;
+$taskclass = $container->has('cardinal') && !$setupMode ? $container->taskclass() : null;
 $tVars     = &$container->tVars;
 $errors    = &$container->errors;
 $success   = &$container->success;
@@ -173,21 +178,6 @@ else {
 
 }
 
-
-if ($container->has('cardinal') && $_SESSION["last_quote"] <= time() - 10 * 60) {
-  $_SESSION["last_quote"] = time();
-  $quote                  = $db->orderBy("RAND()")->getOne("hacker_quotes");
-  $message                = strip_tags('\"' . htmlspecialchars_decode($quote["quote"] . '\"'));
-  if ($quote["author"])
-    $message .= " ~ " . $quote["author"];
-  if ($quote["source"])
-    $message .= " @ " . $quote["source"];
-
-  $messenger[] = array(
-    "message" => ($message)
-  );
-
-} //$_SESSION["last_quote"] <= time() - 10 * 60
 
 
 

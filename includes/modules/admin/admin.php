@@ -22,11 +22,7 @@ if ($_SESSION['premium']['questManager'] && !$user["globalQuestManager"] && !$us
 
 require_once ('../includes/class/class.admin.php');
 
-if ($GET['view'] == 'tests' && $user['cardinal'])
-{
-    require("testsManagement.php");
-}
-elseif ($GET["view"] == "groups" && $user["cardinal"])
+if ($GET["view"] == "groups" && $user["cardinal"])
 {
     require("groupManagement.php");
 }
@@ -312,7 +308,7 @@ elseif ($GET["view"] == "stats" && ($user["view_stats"] || $user["auth_admin"]))
     $tVars["display"] = 'admin/stats/stats.tpl';
 
 }
-elseif ($user["admin_bar"])
+elseif ($user["adminNav"] || $user["cardinal"])
 {
 
     $tVars["display"] = "admin/dashboard.tpl";

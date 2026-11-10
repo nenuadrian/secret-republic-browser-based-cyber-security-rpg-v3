@@ -51,7 +51,7 @@ class Admin extends Alpha {
 
     $members = $this->db->rawQuery('select hu.*, hg.name, lastActive, o.name org_name, login_count from users hu
                                       left outer join user_credentials as uc on uc.uid = hu.id
-                                      left outer join groups as  hg on hg.group_id = uc.group_id
+                                      left outer join user_groups as hg on hg.group_id = uc.group_id
                                       left outer join organizations o on o.id = hu.organization
                                       ' . $filter . '
                                       order by id desc ' . $this->pages->limit);

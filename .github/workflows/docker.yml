@@ -1,38 +1,54 @@
-name: Docker Build
+name: Docker image
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [master]
+    tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
-  docker-build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-    - name: Build Docker image
-      run: docker build -t secretrepublic:test .
+      - uses: docker/setup-qemu-action@v4
 
-    - name: Run PHPUnit tests inside container
-      run: |
-        docker run --rm secretrepublic:test sh -c "
-          composer install --prefer-dist --no-interaction --no-progress &&
-          php includes/vendor/bin/phpunit tests
-        "
+      - uses: docker/setup-buildx-action@v4
 
-    - name: Verify Nginx config is valid
-      run: |
-        docker run --rm secretrepublic:test nginx -t
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Verify PHP-FPM starts cleanly
-      run: |
-        docker run --rm -d --name sr-fpm-check secretrepublic:test php-fpm --nodaemonize
-        sleep 2
-        docker exec sr-fpm-check php-fpm -t
-        docker stop sr-fpm-check
+      - name: Image metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=tag
+            type=sha
+          labels: |
+            org.opencontainers.image.title=Secret Republic V3
+            org.opencontainers.image.description=Open source browser-based cyber security RPG (PHP 8.5, MySQL or SQLite)
+            org.opencontainers.image.documentation=https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/
+
+      - name: Build and push (amd64 + arm64)
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

@@ -1,9 +1,11 @@
 name: Release
 
+# Push a tag such as `v2026.11` to publish a GitHub Release with ready-to-run
+# archives (all Composer libraries included, no dev tools). Tags with a suffix,
+# e.g. `v2026.12-rc1`, are published as pre-releases instead of "Latest".
 on:
   push:
-    tags:
-      - 'v*'
+    tags: ["v*"]
 
 permissions:
   contents: write
@@ -13,55 +15,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.4'
-        extensions: pdo_sqlite
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          extensions: gd, mysqli, pdo_sqlite
+          tools: composer:v2
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-interaction --no-progress --no-dev --optimize-autoloader
+      - name: Test
+        run: |
+          composer install --prefer-dist --no-progress --no-interaction
+          composer lint
+          composer test
 
-    - name: Run tests
-      run: |
-        composer install --prefer-dist --no-interaction --no-progress
-        composer test
+      - name: Install production dependencies
+        run: composer install --prefer-dist --no-progress --no-dev --optimize-autoloader --no-interaction
 
-    - name: Reinstall without dev dependencies
-      run: composer install --prefer-dist --no-interaction --no-progress --no-dev --optimize-autoloader
+      - name: Build standalone archives
+        run: scripts/build-release.sh "${{ github.ref_name }}"
 
-    - name: Create release archive
-      run: |
-        VERSION=${GITHUB_REF#refs/tags/}
-        zip -r "secret-republic-${VERSION}.zip" \
-          includes/ \
-          public_html/ \
-          templates/ \
-          Dockerfile \
-          docker-compose.yml \
-          composer.json \
-          composer.lock \
-          LICENSE \
-          README.md \
-          -x "tests/*" "*.git*"
-        tar -czf "secret-republic-${VERSION}.tar.gz" \
-          --exclude="tests" --exclude=".git" \
-          includes/ \
-          public_html/ \
-          templates/ \
-          Dockerfile \
-          docker-compose.yml \
-          composer.json \
-          composer.lock \
-          LICENSE \
-          README.md
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: Secret Republic V3 ${{ github.ref_name }}
+          generate_release_notes: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          make_latest: ${{ !contains(github.ref_name, '-') }}
+          body: |
+            **Standalone package** - every PHP library is included, nothing to install.
 
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
-      with:
-        generate_release_notes: true
-        files: |
-          secret-republic-*.zip
-          secret-republic-*.tar.gz
+            1. Download `secretrepublic-v3-${{ github.ref_name }}.zip` (or `.tar.gz`) and extract it on a PHP 8.3+ host (Apache or Nginx) with MySQL 8+, or use SQLite.
+            2. Point the web root at `public_html/` and make `includes/` writable by the web server.
+            3. Open the site: the setup wizard does the rest.
+
+            Prefer Docker? `docker pull ghcr.io/${{ github.repository }}:${{ github.ref_name }}` - see the [documentation](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/).
+          files: |
+            dist/secretrepublic-v3-${{ github.ref_name }}.tar.gz
+            dist/secretrepublic-v3-${{ github.ref_name }}.zip
+            dist/SHA256SUMS.txt

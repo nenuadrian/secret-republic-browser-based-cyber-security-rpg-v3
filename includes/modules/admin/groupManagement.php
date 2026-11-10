@@ -3,7 +3,7 @@
 	
   
   
-  $groups = $db->get("groups");
+  $groups = $db->get("user_groups");
   
   
   $nonPermissionColumns = array("group_id", "name", "expiration_date", "leader","maxBlogs","dailyRep");
@@ -26,7 +26,7 @@
               else $dataUpdate[$column] = 0;
        
             $success="Updated";
-          $db->where("group_id", $group["group_id"])->update("groups", $dataUpdate);
+          $db->where("group_id", $group["group_id"])->update("user_groups", $dataUpdate);
           $group = array_merge($group, $dataUpdate);
      
           break;
@@ -37,7 +37,7 @@
       foreach($groups as $k=>$group)
         if($group["group_id"] == $_POST["del"])
         {
-          $db->where("group_id", $_POST["del"])->delete("groups");
+          $db->where("group_id", $_POST["del"])->delete("user_groups");
           $db->where("group_id", $group["group_id"])->update("user_credentials", array("group_id" => $cardinal->config["defaultGroup"]));
           unset ($groups[$k]);
           
@@ -45,8 +45,8 @@
     }
     elseif (isset($_POST["newGroup"]))
     {
-      $db->insert("groups", array("name" => $_POST["newGroup"]));
-      $groups = $db->get("groups");
+      $db->insert("user_groups", array("name" => $_POST["newGroup"]));
+      $groups = $db->get("user_groups");
     }
     
   } // update group

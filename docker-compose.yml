@@ -1,33 +1,55 @@
+# Secret Republic V3 - local stack (PHP 8.5 FPM + Nginx, MySQL 9.7 LTS)
+#
+#   docker compose up -d --build --wait
+#   open http://localhost:8080   -> create your admin account
+#
+# Override any value below with a .env file next to this one (see .env.example).
+name: secretrepublic-v3
+
 services:
   app:
     build: .
+    image: ghcr.io/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3:latest
     ports:
-      - "8080:80"
+      - "${APP_PORT:-8080}:80"
     environment:
+      DB_DRIVER: mysql
       DB_HOST: db
-      DB_USER: secretrepublic
-      DB_PASS: secretrepublic
-      DB_NAME: secretrepublic
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME:-secretrepublic}
+      DB_USER: ${DB_USER:-secretrepublic}
+      DB_PASS: ${DB_PASS:-secretrepublic}
+      CRON_KEY: ${CRON_KEY:-}
+      APP_TIMEZONE: ${APP_TIMEZONE:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-}
+      SMTP_SECURE: ${SMTP_SECURE:-}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY:-}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY:-}
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
 
   db:
-    image: mysql:8
+    image: mysql:9.7
     environment:
-      MYSQL_DATABASE: secretrepublic
-      MYSQL_USER: secretrepublic
-      MYSQL_PASSWORD: secretrepublic
-      MYSQL_ROOT_PASSWORD: rootsecret
-    ports:
-      - "3306:3306"
+      MYSQL_DATABASE: ${DB_NAME:-secretrepublic}
+      MYSQL_USER: ${DB_USER:-secretrepublic}
+      MYSQL_PASSWORD: ${DB_PASS:-secretrepublic}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-change-me-root}
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
       interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 30
+      start_period: 20s
+    restart: unless-stopped
 
 volumes:
   db_data:

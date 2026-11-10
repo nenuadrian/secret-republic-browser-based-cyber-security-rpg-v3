@@ -256,7 +256,7 @@ class Organization extends Alpha
 
 
 
-  function validate_send_app($content = false, $sendNotification = true, $user_id)
+  function validate_send_app($content, $sendNotification, $user_id)
   {
     if (strlen($content) >= 20 && strlen($content) <= $this->config['org_application_size']) {
       $parser = new \JBBCode\Parser();

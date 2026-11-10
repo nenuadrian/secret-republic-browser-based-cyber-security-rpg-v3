@@ -45,7 +45,7 @@ final class SqliteSetupIntegrationTest extends TestCase
         $tables = $this->db->rawQuery(
             "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name"
         );
-        $this->assertCount(100, $tables);
+        $this->assertCount(99, $tables);
     }
 
     public function testSeedDataImported(): void

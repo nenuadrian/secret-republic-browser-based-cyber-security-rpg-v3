@@ -13,6 +13,7 @@ class SqliteDb
     protected $lastError = '';
 
     protected $wheres = array();
+    protected $nextWhereGlue = 'AND';
     protected $joins = array();
     protected $orderBys = array();
     protected $groupBys = array();
@@ -90,6 +91,16 @@ class SqliteDb
 
         $this->addFieldCondition($field, $operator, $value);
         return $this;
+    }
+
+    /**
+     * Same as where(), but joined to the previous condition with OR
+     * (MysqliDb::orWhere compatible).
+     */
+    public function orWhere($field)
+    {
+        $this->nextWhereGlue = 'OR';
+        return call_user_func_array(array($this, 'where'), func_get_args());
     }
 
     public function join($table, $condition, $type = '')
@@ -331,15 +342,18 @@ class SqliteDb
             return '';
         }
 
-        $clauses = array();
-        foreach ($this->wheres as $where) {
-            $clauses[] = '(' . $where['condition'] . ')';
+        $sql = '';
+        foreach ($this->wheres as $i => $where) {
+            if ($i > 0) {
+                $sql .= ' ' . (isset($where['glue']) ? $where['glue'] : 'AND') . ' ';
+            }
+            $sql .= '(' . $where['condition'] . ')';
             if (!empty($where['params'])) {
                 $params = array_merge($params, $where['params']);
             }
         }
 
-        return ' WHERE ' . implode(' AND ', $clauses);
+        return ' WHERE ' . $sql;
     }
 
     protected function buildGroupByClause()
@@ -372,8 +386,10 @@ class SqliteDb
     {
         $this->wheres[] = array(
             'condition' => $this->translateSqlFunctions($condition),
-            'params' => $params
+            'params' => $params,
+            'glue' => $this->nextWhereGlue
         );
+        $this->nextWhereGlue = 'AND';
     }
 
     protected function addFieldCondition($field, $operator, $value)
@@ -467,6 +483,7 @@ class SqliteDb
     protected function resetQueryState()
     {
         $this->wheres = array();
+        $this->nextWhereGlue = 'AND';
         $this->joins = array();
         $this->orderBys = array();
         $this->groupBys = array();
