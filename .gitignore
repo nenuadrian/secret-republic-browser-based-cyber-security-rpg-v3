@@ -14,3 +14,21 @@ includes/db.env
 # Editor backup / undo files (can contain local credentials)
 *~
 *.un~
+
+# Tooling caches
+.phplint-cache
+.phpunit.cache/
+
+# Local environment
+.env
+
+# Docs site (Astro)
+docs/node_modules/
+docs/dist/
+docs/.astro/
+
+# Release builds
+dist/
+
+# SQLite data folder used by the Docker volume
+includes/data/

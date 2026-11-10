@@ -101,10 +101,7 @@ else
 	  {
 	    if ($_POST["old"] != $_POST["new"])
       {
-        if (!$no_pass)
-        $oldPass = $cardinal->loginSystem->generatePasswordHash($_POST["old"], $credentials["pin"]);
-
-        if (!$credentials["password"] || $credentials["password"] == $oldPass)
+        if (!$credentials["password"] || $cardinal->loginSystem->verifyPassword($_POST["old"], $credentials["password"], $credentials["pin"]))
         {
           $_SESSION["failedChangeAttempts"] = 0;
 

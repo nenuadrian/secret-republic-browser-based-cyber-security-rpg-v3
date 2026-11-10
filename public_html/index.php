@@ -67,7 +67,6 @@ if (!file_exists('../includes/database_info.php')) {
 		'host' => getenv('DB_HOST') ?: 'localhost',
 		'port' => getenv('DB_PORT') ?: '3306',
 		'user' => getenv('DB_USER') ?: 'root',
-		'pass' => getenv('DB_PASS') ?: '',
 		'name' => getenv('DB_NAME') ?: '',
 		'driver' => getenv('DB_DRIVER') ?: 'mysql',
 	);
@@ -75,6 +74,14 @@ if (!file_exists('../includes/database_info.php')) {
 	$cardinal = new Cardinal($container);
 	$container->set('cardinal', $cardinal);
 	$container->url = $cardinal->config['url'];
+
+	// Configured (e.g. from DB_* env vars in Docker) but the game tables are
+	// not there yet: run the admin-only setup.
+	require_once('../includes/class/Installer.php');
+	if (!Installer::isInstalledCached($container->db(), implode('/', $path) . '/includes/cache')) {
+		$include = 'setup';
+		define('SR_SETUP_MODE', true);
+	}
 }
 
 if ($include != "404" && !file_exists("../includes/modules/" . $include . ".php"))
@@ -112,6 +119,7 @@ if (!$container->tVars["json"])
 
   if ($container->tVars["show_404"])
   {
+    http_response_code(404);
     $container->tVars["audio"] = "eve/404.mp3";
 
     $container->tVars["display"] = 'pages/404.tpl';

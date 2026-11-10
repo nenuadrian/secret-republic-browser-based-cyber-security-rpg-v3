@@ -20,7 +20,7 @@ foreach ($users as $user)
     {
 		$bonusPercent = 15;
 		$bonus = round(($dataPointsPerHour / 100) * $bonusPercent, 2);
-		$$dataPointsPerHour += $bonus;
+		$dataPointsPerHour += $bonus;
 	}
 	
 	$dataPointsPerMinute = ($dataPointsPerHour / 60) * ((time() - $user['lastResUpdate']) / 60);

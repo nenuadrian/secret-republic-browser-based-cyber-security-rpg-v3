@@ -1,0 +1,91 @@
+---
+title: Secret Republic V3
+description: Secret Republic V3 is a free, open source browser-based cyber security RPG with terminal-style missions, servers, organizations, wars and a world map. Self-host it with PHP 8.5 and MySQL or SQLite.
+template: splash
+head:
+  - tag: title
+    content: 'Secret Republic V3: Open Source Browser-Based Cyber Security RPG'
+hero:
+  title: Secret Republic V3
+  tagline: A post-apocalyptic, browser-based cyber security RPG. Break into servers from a terminal, build your own machines, join organizations and fight for control of the Grid.
+  image:
+    file: ../../assets/logo.png
+    alt: Secret Republic crown logo
+  actions:
+    - text: Quick start
+      link: getting-started/quick-start/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import shotMission from '../../../../screens/3.jpg';
+import shotGrid from '../../../../screens/6.jpg';
+import shotDesigner from '../../../../screens/7.jpg';
+
+## What is Secret Republic V3?
+
+**Secret Republic V3** is the feature-rich, third full version of an open source cyber security role-playing
+game that runs in the browser. Players take on missions in a UNIX-like terminal, upgrade skills and
+abilities, build and equip their own servers, join or found organizations, wage wars over zones of the
+Grid and compete in timed "hackdown" events. There's enough here for a complete stand-alone game, and it
+ships with an admin panel and a mission designer so you can run your own world.
+
+<CardGrid>
+	<Card title="Terminal missions" icon="seti:shell">
+		SSH, SMTP, SQL and HTTP services, file encryption, bouncing, DDoS and trace levels, all driven by a mission designer.
+	</Card>
+	<Card title="Servers & hardware" icon="laptop">
+		Build servers with upgradable motherboard, RAM, storage and power, then run software that uses their resources.
+	</Card>
+	<Card title="Organizations & wars" icon="star">
+		Player-run guilds with ranks, internal forums, organization missions and wars between groups and zones.
+	</Card>
+	<Card title="The Grid" icon="puzzle">
+		Six zones of clusters and nodes to initialize, conquer, spy on and attack.
+	</Card>
+	<Card title="Community" icon="comment-alt">
+		Forums, blogs, messaging, friends, rankings, achievements and an AI voice.
+	</Card>
+	<Card title="Easy to host" icon="rocket">
+		PHP 8.5 with MySQL 9.7 or a single SQLite file, one-command Docker and a web setup wizard.
+	</Card>
+</CardGrid>
+
+## See it in action
+
+<div class="sr-shots">
+	<figure>
+		<Image src={shotMission} alt="Terminal-style mission interface" widths={[480, 800]} sizes="(min-width: 50rem) 33vw, 100vw" />
+		<figcaption>Missions</figcaption>
+	</figure>
+	<figure>
+		<Image src={shotGrid} alt="The Grid world map of zones and nodes" widths={[480, 800]} sizes="(min-width: 50rem) 33vw, 100vw" />
+		<figcaption>The Grid</figcaption>
+	</figure>
+	<figure>
+		<Image src={shotDesigner} alt="Mission designer in the admin panel" widths={[480, 800]} sizes="(min-width: 50rem) 33vw, 100vw" />
+		<figcaption>Mission designer</figcaption>
+	</figure>
+</div>
+
+## Run your own server in two minutes
+
+```bash
+git clone https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3.git
+cd secret-republic-browser-based-cyber-security-rpg-v3
+docker compose up -d --build --wait
+# open http://localhost:8080 and create the admin account
+```
+
+<CardGrid>
+	<LinkCard title="Quick start with Docker" href="getting-started/quick-start/" description="MySQL 9.7 stack, or a single container with SQLite." />
+	<LinkCard title="Install on shared hosting / LAMP" href="getting-started/manual-install/" description="Download a release, upload it, run the setup wizard." />
+	<LinkCard title="Mission console commands" href="game/missions/" description="ssh, crack, nmap, bounce, ddos, SQL and more." />
+	<LinkCard title="Design your own missions" href="admin/mission-designer/" description="Hosts, services, files, objectives and Q-Syntax." />
+</CardGrid>

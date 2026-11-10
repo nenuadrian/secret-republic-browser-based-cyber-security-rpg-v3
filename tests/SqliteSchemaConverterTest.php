@@ -19,7 +19,7 @@ final class SqliteSchemaConverterTest extends TestCase
             if (stripos($s, 'INSERT INTO') === 0) $inserts++;
         }
 
-        $this->assertSame(100, $creates, 'Should produce 100 CREATE TABLE statements');
+        $this->assertSame(99, $creates, 'Should produce 99 CREATE TABLE statements');
         $this->assertGreaterThan(0, $inserts, 'Should produce INSERT statements');
     }
 
@@ -41,7 +41,7 @@ final class SqliteSchemaConverterTest extends TestCase
 
         // Verify table count
         $tables = $pdo->query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")->fetchColumn();
-        $this->assertSame(100, (int) $tables);
+        $this->assertSame(99, (int) $tables);
     }
 
     public function testTypeNormalization(): void

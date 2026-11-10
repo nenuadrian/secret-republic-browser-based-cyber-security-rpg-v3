@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP 8.5
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          extensions: gd, mysqli, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate composer.json
+        run: composer validate
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer downloads
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Lint (syntax + deprecations)
+        run: composer lint
+
+      - name: Unit tests
+        run: composer test
+
+      - name: Security audit
+        run: composer audit
+
+  docker:
+    name: Docker + setup wizard (MySQL and SQLite)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Start PHP 8.5 + MySQL 9.7 stack
+        run: docker compose up -d --build --wait
+
+      - name: Smoke test (MySQL)
+        run: tests/smoke.sh http://localhost:8080
+
+      - name: Start standalone SQLite container
+        run: |
+          docker run -d --name sr-sqlite -p 8081:80 -e DB_DRIVER=sqlite \
+            ghcr.io/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3:latest
+          for i in $(seq 1 30); do
+            [ "$(docker inspect -f '{{.State.Health.Status}}' sr-sqlite)" = healthy ] && exit 0
+            sleep 2
+          done
+          exit 1
+
+      - name: Smoke test (SQLite)
+        run: tests/smoke.sh http://localhost:8081
+
+      - name: Container logs
+        if: failure()
+        run: |
+          docker compose logs
+          docker logs sr-sqlite || true
+
+      - name: Tear down
+        if: always()
+        run: |
+          docker rm -f sr-sqlite || true
+          docker compose down -v

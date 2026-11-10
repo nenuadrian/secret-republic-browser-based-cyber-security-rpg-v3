@@ -1,12 +1,36 @@
+# VCS / CI
 .git
 .github
+.gitignore
+
+# Docs & media (not needed at runtime)
 docs
 screens
 MISSION-GUIDES
 *.md
 !README.md
+
+# Local dependencies and state - never bake these into the image
 includes/vendor
 includes/templates_c
 includes/cache
-includes/local.sqlite
+includes/*.sqlite
 includes/database_info.php
+includes/local_settings.php
+includes/db.env
+.env
+.env.*
+node_modules
+
+# Dev tooling
+tests
+test.sh
+.phpunit.cache
+.phplint-cache
+docker-compose*.yml
+compose*.yaml
+dist
+**/.DS_Store
+*~
+*.un~
+includes/data

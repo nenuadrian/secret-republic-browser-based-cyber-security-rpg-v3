@@ -39,6 +39,9 @@ class Cardinal extends Alpha {
         $dbConfig['name'],
         isset($dbConfig['port']) ? $dbConfig['port'] : 3306
       );
+      // Some game queries group by non-aggregated columns; MySQL 5.7+ rejects
+      // that by default (ONLY_FULL_GROUP_BY). Relax it for this connection only.
+      $db->mysqli()->query("SET SESSION sql_mode = (SELECT REPLACE(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
     }
     $db->setTrace(true);
     $this->container->set('db', $db);

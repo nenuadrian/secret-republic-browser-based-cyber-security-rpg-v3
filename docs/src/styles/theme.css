@@ -1,0 +1,273 @@
+/*
+ * Secret Republic docs theme
+ * Dark, terminal-flavoured palette taken from the game UI:
+ * electric blue #209eff, ice blue #b1d4ef, warning orange #ff9d00,
+ * violet low-poly lines, Josefin Sans headings.
+ */
+
+:root,
+:root[data-theme='dark'] {
+	--sr-blue: #209eff;
+	--sr-blue-deep: #118dec;
+	--sr-ice: #b1d4ef;
+	--sr-violet: #6b5cff;
+	--sr-orange: #ff9d00;
+	--sr-glow: 0 0 18px rgba(32, 158, 255, 0.45);
+	--sr-grid: rgba(107, 92, 255, 0.06);
+
+	--sl-color-accent-low: #06213d;
+	--sl-color-accent: #209eff;
+	--sl-color-accent-high: #b1d4ef;
+
+	--sl-color-white: #f1f6fc;
+	--sl-color-gray-1: #dbe4f0;
+	--sl-color-gray-2: #b3c0d1;
+	--sl-color-gray-3: #7f8ca3;
+	--sl-color-gray-4: #4a5670;
+	--sl-color-gray-5: #222b3d;
+	--sl-color-gray-6: #0e1421;
+	--sl-color-black: #05070d;
+
+	--sl-color-bg-nav: rgba(5, 7, 13, 0.82);
+	--sl-color-bg-sidebar: #070a12;
+	--sl-color-hairline-light: rgba(32, 158, 255, 0.14);
+	--sl-color-hairline: rgba(32, 158, 255, 0.1);
+	--sl-color-hairline-shade: #03050a;
+
+	--sl-color-orange-low: #3a2400;
+	--sl-color-orange: #ff9d00;
+	--sl-color-orange-high: #ffd59a;
+
+	--sl-font: 'Josefin Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--sl-font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+	--sl-text-body: 1.0625rem;
+	--sl-line-height: 1.7;
+	/* Full-width content: fill everything between the sidebars */
+	--sl-content-width: 100vw;
+
+	color-scheme: dark;
+}
+
+/* ---- Backdrop: faint grid + blue/violet glow, like the game's low-poly art ---- */
+body {
+	background-color: var(--sl-color-black);
+	background-image:
+		radial-gradient(60rem 30rem at 85% -10%, rgba(107, 92, 255, 0.16), transparent 60%),
+		radial-gradient(50rem 30rem at -10% 10%, rgba(32, 158, 255, 0.1), transparent 60%),
+		linear-gradient(var(--sr-grid) 1px, transparent 1px),
+		linear-gradient(90deg, var(--sr-grid) 1px, transparent 1px);
+	background-size: auto, auto, 48px 48px, 48px 48px;
+	background-attachment: fixed;
+}
+
+::selection {
+	background: rgba(32, 158, 255, 0.35);
+	color: #fff;
+}
+
+/* ---- Typography ---- */
+h1,
+h2,
+h3,
+h4,
+.site-title,
+.sl-markdown-content :is(h1, h2, h3, h4) {
+	font-family: 'Josefin Sans', var(--sl-font);
+	letter-spacing: 0.04em;
+}
+
+.sl-markdown-content h2 {
+	padding-bottom: 0.35rem;
+	border-bottom: 1px solid var(--sl-color-hairline-light);
+}
+
+.sl-markdown-content h2::before {
+	content: '//';
+	margin-inline-end: 0.5rem;
+	color: var(--sr-blue);
+	font-family: var(--sl-font-mono);
+	font-size: 0.8em;
+	opacity: 0.7;
+}
+
+h1#_top {
+	text-shadow: var(--sr-glow);
+}
+
+.site-title {
+	text-transform: uppercase;
+	letter-spacing: 0.22em;
+	font-weight: 600;
+	font-size: 1rem;
+	color: var(--sl-color-white);
+}
+
+.site-title img {
+	filter: drop-shadow(0 0 6px rgba(32, 158, 255, 0.6));
+}
+
+/* Inline code reads like terminal output */
+.sl-markdown-content :not(pre) > code {
+	color: var(--sr-ice);
+	background: rgba(32, 158, 255, 0.08);
+	border: 1px solid rgba(32, 158, 255, 0.18);
+	border-radius: 4px;
+	padding: 0.05em 0.35em;
+}
+
+.sl-markdown-content a:not(.sl-link-card a, .card a) {
+	text-decoration-color: rgba(32, 158, 255, 0.4);
+	text-underline-offset: 0.2em;
+}
+
+.sl-markdown-content a:hover {
+	text-decoration-color: var(--sr-blue);
+}
+
+/* ---- Header & sidebar ---- */
+header.header {
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border-bottom: 1px solid var(--sl-color-hairline-light);
+}
+
+.sidebar-pane {
+	border-inline-end: 1px solid var(--sl-color-hairline);
+}
+
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover {
+	background: linear-gradient(90deg, rgba(32, 158, 255, 0.22), rgba(32, 158, 255, 0.04));
+	color: var(--sl-color-white);
+	box-shadow: inset 2px 0 0 var(--sr-blue);
+	font-weight: 600;
+}
+
+.sidebar-content .group-label .large {
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	font-size: 0.8rem;
+	color: var(--sr-ice);
+}
+
+/* ---- Cards, asides, tables ---- */
+.card,
+.sl-link-card {
+	background: linear-gradient(180deg, rgba(14, 20, 33, 0.9), rgba(7, 10, 18, 0.9));
+	border: 1px solid var(--sl-color-hairline-light) !important;
+	border-radius: 8px;
+	transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.card:hover,
+.sl-link-card:hover {
+	border-color: rgba(32, 158, 255, 0.55) !important;
+	box-shadow: var(--sr-glow);
+}
+
+.card .icon {
+	color: var(--sr-blue);
+	filter: drop-shadow(0 0 6px rgba(32, 158, 255, 0.5));
+}
+
+.starlight-aside {
+	border-radius: 6px;
+	background: rgba(14, 20, 33, 0.85);
+}
+
+.sl-markdown-content table {
+	font-size: 0.95em;
+}
+
+.sl-markdown-content th {
+	background: rgba(32, 158, 255, 0.08);
+	color: var(--sr-ice);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-size: 0.8em;
+}
+
+.sl-markdown-content img {
+	border-radius: 8px;
+	border: 1px solid var(--sl-color-hairline-light);
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Splash / hero ---- */
+.hero {
+	padding-block: clamp(2rem, 6vw, 5rem);
+}
+
+.hero h1 {
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	text-shadow: var(--sr-glow);
+	color: var(--sl-color-white);
+}
+
+.hero h1::after {
+	content: '_';
+	color: var(--sr-blue);
+	animation: sr-blink 1.1s steps(1) infinite;
+}
+
+.hero .tagline {
+	color: var(--sl-color-gray-2);
+	max-width: 36rem;
+}
+
+.hero img {
+	border: none;
+	box-shadow: none;
+	filter: drop-shadow(0 0 28px rgba(32, 158, 255, 0.55));
+}
+
+.sl-link-button.primary {
+	background: var(--sr-blue);
+	border-color: var(--sr-blue);
+	color: #02060c;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	box-shadow: var(--sr-glow);
+}
+
+.sl-link-button.primary:hover {
+	background: var(--sr-ice);
+	border-color: var(--sr-ice);
+}
+
+@keyframes sr-blink {
+	50% {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero h1::after {
+		animation: none;
+	}
+	.card,
+	.sl-link-card {
+		transition: none;
+	}
+}
+
+/* Screenshot grid used on the home and screenshots pages */
+.sr-shots {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+	gap: 1rem;
+	margin-block: 1.5rem;
+}
+
+.sr-shots figure {
+	margin: 0;
+}
+
+.sr-shots figcaption {
+	margin-top: 0.4rem;
+	font-size: 0.85rem;
+	color: var(--sl-color-gray-3);
+	letter-spacing: 0.04em;
+	text-align: center;
+}

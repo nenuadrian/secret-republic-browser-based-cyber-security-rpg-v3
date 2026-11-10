@@ -1,382 +1,91 @@
-# Secret Republic - Browser Based futuristic PHP hacker game - V3
+# Secret Republic V3: Browser-Based Cyber Security RPG
 
-[![PHP Tests](https://github.com/nenuadrian/Secret-Republic-Hacking-Browser-Game-V3/actions/workflows/php.yml/badge.svg)](https://github.com/nenuadrian/Secret-Republic-Hacking-Browser-Game-V3/actions/workflows/php.yml)
-[![Docs (GitHub Pages)](https://github.com/nenuadrian/Secret-Republic-Hacking-Browser-Game-V3/actions/workflows/docs.yml/badge.svg)](https://github.com/nenuadrian/Secret-Republic-Hacking-Browser-Game-V3/actions/workflows/docs.yml)
-[![Docker Build](https://github.com/nenuadrian/Secret-Republic-Hacking-Browser-Game-V3/actions/workflows/docker.yml/badge.svg)](https://github.com/nenuadrian/Secret-Republic-Hacking-Browser-Game-V3/actions/workflows/docker.yml)
-<p align="center">
+[![CI](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/actions/workflows/ci.yml/badge.svg)](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/actions/workflows/ci.yml)
+[![Docker image](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/actions/workflows/docker.yml/badge.svg)](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/pkgs/container/secret-republic-browser-based-cyber-security-rpg-v3)
+[![Docs](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/actions/workflows/docs.yml/badge.svg)](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/)
+[![Latest release](https://img.shields.io/github/v/release/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3?include_prereleases&sort=semver)](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-![Cover](screens/cover.jpg)
+![Secret Republic](screens/cover.jpg)
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+**Secret Republic V3** is an open source, post-apocalyptic **cyber security RPG** for the browser. Players
+break into servers from a terminal, build and upgrade their own machines, join organizations, wage wars
+over zones of the Grid and compete in weekly hackdowns. An admin panel and mission designer are included.
 
-</p>
+**📖 Documentation: https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/**
 
-Hosted on recommended provider [DreamHost](https://mbsy.co/dreamhost/92571715).
+## Features
 
-Audio Trailer: https://www.youtube.com/watch?v=6thfiGb-b7c
+- **Terminal missions** with SSH, SMTP, SQL and HTTP services, cracking, bouncing and DDoS, plus a full **mission designer**
+- **Servers** with upgradable hardware and software, mining **Data Points**
+- **Skills, abilities**, an 18-step **tutorial**, rewards, jobs and training
+- **Organizations, wars, the Grid** (6 zones of nodes), attacks and the **hackdown** competition
+- **Community**: forums, blogs, messaging, friends and rankings
+- **Easy hosting**: PHP 8.5 with MySQL 9.7 or SQLite, one-command Docker and a web setup wizard
 
-[Read about the journey of this project in this Medium article.](https://medium.com/@adrian.n/secret-republic-open-sourced-hacker-simulation-futuristic-rpg-browser-based-game-php-843d393cb9d7)
-
-## Table of Contents
-
-- [Secret Republic - Browser Based futuristic PHP hacker game - V3](#secret-republic---browser-based-futuristic-php-hacker-game---v3)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Main-Features](#main-features)
-  - [SecretAlpha-V4](#secretalpha-v4)
-  - [Simple-Setup](#simple-setup)
-    - [Docker setup (recommended)](#docker-setup-recommended)
-    - [Manual setup](#manual-setup)
-      - [Requirements](#requirements)
-    - [Semi-manual setup](#semi-manual-setup)
-    - [Manual setup (without Docker)](#manual-setup-without-docker)
-    - [SQLite details](#sqlite-details)
-    - [Useful tips](#useful-tips)
-  - [Cron jobs](#cron-jobs)
-  - [Screenshots](#screenshots)
-    - [main page](#main-page)
-    - [player dashboard](#player-dashboard)
-    - [mission](#mission)
-    - [organization](#organization)
-    - [skills](#skills)
-    - [the grid](#the-grid)
-    - [mission designer](#mission-designer)
-    - [forum](#forum)
-  - [Framework details](#framework-details)
-    - [~MVC Architecture](#mvc-architecture)
-    - [Routing](#routing)
-    - [Creating new missions](#creating-new-missions)
-    - [Adding skills, ablitites or tutorial steps](#adding-skills-ablitites-or-tutorial-steps)
-      - [Tutorial steps](#tutorial-steps)
-    - [New pages with minimal functionality](#new-pages-with-minimal-functionality)
-  - [Tests](#tests)
-  - [Contributors](#contributors)
-  - [License](#license)
-
-## Overview
-
-Built from the ground up by a fairely inexperienced software developer at the time.
-
-It's been through years of development with this being its 3rd full do-over.
-
-A PHP & MySQL based browser based, mobile compatible, role playing game. The theme is post-apocalyptic futuristic hacking.
-
-There are many features, enough for this to be a stand-alone game, ranging from guilds/organizations, to party system, single and multi-player missions, servers players can build and hack, wars between zones players can join and even be the president of, forums and blogs. And that is not even all.
-
-Documentation is minimal and is being built as we go.
-
-I am trying to actively contribute and solve raised issues, so please feel free to raise one, and more so please contribute with whatever you can!
-
-## Main-Features
-
-| Feature       | Description           |
-| ------------- | --------------------- |
-| Futuristic UI | Bootstrap made. Custom build. Generally responsive. |
-| Abilities     | Upgradeable, enhance player stats, take time to level up. Controlled by `constants/abilities.php`.     |
-| Skills        | Point based, where points can be earned by levelling up. Enhance player stats. Controlled by `constants/skills.php`.  |
-| Tutorial      | Multiple guiding steps, with rewards at each step. Players can skip steps. Quite advanced and flexible, easy to extend. Controlled by `constants/tutorial.php`. |
-| Rewards       | The reward system allows the game to give players multiple rewards (stat points, money, etc.) in a packaged way (as a reward with multiple items). The players can then accept the reward at which point it will be applied, and they can review history of rewards. |
-| Audio AI      | Audio cues have been pre-recorded for use in the game. They can be muted and play when specific actions take place. |
-| Admin Panel   | Advanced administration interface, with user management, mission design screens, and more. |
-| Mission Designer | Part of the admin panel, allows for advanced design of missions, with multiple objective and sub-objectives, and custom BBCodes. |
-| Missions      | Enhanced UNIX terminal-like missions, which can be leveraged across the game, including for guild daily missions, the hackdown competition, training, or story-drive missions. Easy to extend and re-use. |
-| Servers | Can build multiple, each with their own upgradable hardware (motherboard, ram, hdd, power source). And software which can be run and uses resources. |
-| Forums | Feature-rich integrated forum system. With the ability to create internal forums specific to guilds in-game. |
-| Organizations | Guild-like system. Owned by players. Can create multiple membership groups, there are missions specific for organizations and wars can be declared between them. They can have their own internal forums. |
-| Messaging | Ability for players to chat, in a thread based system. |
-| Blogs | Feature-rich player blog system. |
-| Hackdown | Mission based `cron.php` scheduled competition. |
-| Friends | Friend system for players. |
-| The Grid |  Every players gets a starting `node` and can initialize/conquer other empty nodes or from other players. The world is split in multiple zones, which are divided into clusters with multiple nodes in each cluster. Damage and spy attacks can be triggered between nodes. There's an attempt at a simulator for attacks |
-| Attacks | Players can launch attacks using their nodes on other players. |
-| Data Points | Mined via `cron.php` and use resources and software. |
-| Alpha Coins | Premium currency, with custom in-game shop, coupons and more. |
-| Rankings | Generated via `cron.php`, they are at player and organization granularity. |
-| Job | Give players a mission designed in the mission designer to complete depending on level, for rewards. |
-| Zones | Splits the world, 6 zones, each with many clusters, each with a couple of nodes. Players can take over nodes, and they start with a random node. | 
-| Train | Captcha and some other mini-games designed for players to complete daily for rewards. | 
-
-## SecretAlpha-V4
-
-V4 is newer, more responsive made with mobile-first in mind, but with way less features.
-
-https://github.com/nenuadrian/Secret-Republic-Hacker-Game-ORPBG-Alpha
-
-## Simple-Setup
-
-### Docker setup (recommended)
-
-The quickest way to get up and running. Requires [Docker](https://www.docker.com/get-started) installed.
-
-**With MySQL (Docker Compose):**
+## Quick start
 
 ```bash
-docker compose up --build
+git clone https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3.git
+cd secret-republic-browser-based-cyber-security-rpg-v3
+docker compose up -d --build --wait
 ```
 
-This starts both the app and a MySQL database. Visit `http://localhost:8080` — the app will show the setup page on first visit where you can configure the database and create your admin account.
-
-Use these values on the setup page:
-| Field | Value |
-|-------|-------|
-| Host | `db` |
-| Port | `3306` |
-| User | `secretrepublic` |
-| Password | `secretrepublic` |
-| Database | `secretrepublic` |
-
-To stop and clean up:
-```bash
-docker compose down        # stop containers (keeps data)
-docker compose down -v     # stop containers and delete database volume
-```
-
-**Standalone with SQLite (no database server needed):**
+Open http://localhost:8080 and create your admin account. Prefer no database server? Run the image with
+SQLite:
 
 ```bash
-docker build -t secret-republic .
-docker run -p 8080:80 secret-republic
+docker run -d -p 8080:80 -e DB_DRIVER=sqlite ghcr.io/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3:latest
 ```
 
-Visit `http://localhost:8080` and choose SQLite on the setup page.
+Without Docker, download the ready-to-run archive from the
+[latest release](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v3/releases/latest)
+and follow the [manual install guide](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/getting-started/manual-install/).
+Then schedule the [cron jobs](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/getting-started/cron-jobs/) and set your own `CRON_KEY`.
 
-### Manual setup
+## Documentation
 
-#### Requirements
-
-You need a webserver (e.g. MAMP/WAMP/XAMPP) able to run PHP (tested with 7.3+/8.3) and a database.
-Both MySQL and local SQLite are supported. SQLite requires the `pdo_sqlite` PHP extension (enabled by default in most installations).
-
-1. Install `composer` (the PHP dependency management system - `brew install composer` for MacOS if you have brew) and run `composer install`
-
-2. Pick one database mode:
-
-   - MySQL: create an empty database (for MAMP you can use `http://localhost:8888/phpMyAdmin5`)
-   - SQLite (local): no external DB server needed; setup creates a local `.sqlite` file
-
-### Semi-manual setup
-
-![Screenshot](screens/setup.png)
-
-Visit `http://localhost/public_html/setup` - this may be different if you are using another port or directory structure, e.g. `http://localhost:8888/sr/public_html/setup` and follow the setup process.
-You can choose `MYSQL` or `SQLITE (LOCAL FILE)` on the setup screen.
-
-### Manual setup (without Docker)
-
-1. Rename `includes/database_info.php.template` to `includes/database_info.php` and configure it (or set the environment variables listed above):
-
-   **MySQL mode:**
-   ```php
-   $db['driver'] = 'mysql';
-   $db['server_name'] = 'localhost';
-   $db['username'] = 'root';
-   $db['password'] = '';
-   $db['name'] = 'your_database';
-   $db['port'] = 3306;
-   ```
-   Then import the schema: `mysql -u root your_database < includes/install/DB.sql`
-
-   **SQLite mode:**
-   ```php
-   $db['driver'] = 'sqlite';
-   $db['sqlite_path'] = 'includes/local.sqlite';
-   ```
-   The SQLite schema is imported automatically on first run via the setup page. For manual import, use the PHP helper:
-   ```php
-   require_once 'includes/class/SqliteDb.php';
-   require_once 'includes/class/SqliteSchemaConverter.php';
-   $db = new SqliteDb('includes/local.sqlite');
-   $stmts = SqliteSchemaConverter::convertMySqlDump(file_get_contents('includes/install/DB.sql'));
-   foreach ($stmts as $sql) { $db->rawQuery($sql); }
-   ```
-
-2. The game should be up and running. Go and create an account manually.
-
-3. Go to the `user_credentials` table and update the entry for your user, setting the column `group_id` to be `1`. This will make your account a full administrator. Log out and log back in.
-
-### SQLite details
-
-SQLite support requires no external database server. The database is stored as a single file (default: `includes/local.sqlite`). The path can be relative to the project root or absolute.
-
-**How it works:**
-- `SqliteSchemaConverter` automatically converts the MySQL schema (`DB.sql`) to SQLite-compatible SQL at setup time, handling type mappings, escape sequences, primary keys and auto-increment columns.
-- `SqliteDb` is a lightweight PDO-based adapter that mirrors the `Mysqlidb` API (query builder, `where()`, `join()`, `get()`, `insert()`, `update()`, `delete()`, `rawQuery()`, etc.) so the game code works with either driver.
-- MySQL-specific SQL like `RAND()` is translated to `RANDOM()` at runtime, and `UPDATE/DELETE ... LIMIT` is rewritten using subqueries.
-
-**Requirements:**
-- PHP `pdo_sqlite` extension (included by default in most PHP installations)
-- Write permission on the directory where the `.sqlite` file will be created
-
-**Limitations:**
-- SQLite is best for development and small deployments. For production with many concurrent users, MySQL is recommended.
-- Foreign key constraints from the MySQL schema are partially supported (inline constraints work; ALTER TABLE constraints are skipped as SQLite has limited ALTER TABLE support).
-
-### Useful tips
-
-You may need to manually execute the following SQL if you see a GROUP BY related error on the missions page (MySQL only):
-
-```
-SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
-```
-
-### Email / SMTP configuration
-
-Email (account confirmations, support mail, notifications) is **disabled by default** — `smtp_host` is empty in `includes/constants/constants.php`, so the app never attempts to send mail.
-
-Enable it by setting any of the following environment variables (unset keeps the default):
-
-| Variable | Default | Meaning |
-| -------- | ------- | ------- |
-| `SMTP_HOST` | *(empty — mail disabled)* | SMTP server host/IP, e.g. `127.0.0.1` for a local sendmail or postfix |
-| `SMTP_PORT` | `25` | SMTP port |
-| `SMTP_SECURE` | *(empty)* | `''` plain, `'tls'`, or `'ssl'` |
-
-**Example with PHP-FPM** — add to your pool config (e.g. `/etc/php-fpm.d/www.conf`) and reload php-fpm:
-
-```
-env[SMTP_HOST] = 127.0.0.1
-env[SMTP_PORT] = 25
-```
-
-**Alternative without touching the pool config** — if you can't edit the (root-owned) FPM config, create a gitignored `includes/local_settings.php` that `constants.php` auto-loads (it is already gitignored):
-
-```php
-<?php
-putenv('SMTP_HOST=127.0.0.1');
-putenv('SMTP_PORT=25');
-```
-
-Notes:
-
-- A local MTA (sendmail/postfix) on port 25 normally needs no credentials — SMTP authentication is only attempted when a `smtp_username` is configured.
-- Leave `SMTP_SECURE` empty for a local MTA. Opportunistic STARTTLS is skipped in that case, since a local MTA's self-signed certificate would otherwise fail verification.
-- `sendEmail()` throws an uncaught PHPMailer exception if the SMTP server is unreachable, breaking pages like registration or support. **Only set `SMTP_HOST` on hosts that actually run an MTA on `SMTP_PORT`.**
-
-**App timezone** — the game defaults to `America/Detroit`. Override per-install without editing tracked files via the same mechanism, e.g. in `includes/local_settings.php`:
-
-```php
-putenv('APP_TIMEZONE=Europe/London');
-```
-
-## Cron jobs
-
-https://en.wikipedia.org/wiki/Cron
-
-These ensure processes run as required, that hacking competitions start, that attack reports are generated and that time based resources are given to players.
-
-Set these up to run periodically as the parameters suggest. The resources one should run every minute.
-
-| Name | Description | URL    | Proposed schedule |
-| -----|-------------|-------|------- |
-| Attacks | | localhost/cron/key1/MDMwN2Q3OGRiYmM4Y2RkOWZjNTBmMzA4MzViZDZiNjQ=/attacks/true | Every minute |
-| Hourly | | localhost/cron/key1/MDMwN2Q3OGRiYmM4Y2RkOWZjNTBmMzA4MzViZDZiNjQ=/hourly/true | Hourly |
-| Daily | | localhost/cron/key1/MDMwN2Q3OGRiYmM4Y2RkOWZjNTBmMzA4MzViZDZiNjQ=/daily/true | Daily |
-| Hackdown | | localhost/cron/key1/MDMwN2Q3OGRiYmM4Y2RkOWZjNTBmMzA4MzViZDZiNjQ=/hackdown/true | Daily |
-| Rankings | | localhost/cron/key1/MDMwN2Q3OGRiYmM4Y2RkOWZjNTBmMzA4MzViZDZiNjQ/rankings/true | Hourly |
- 
-
-Example:
-```
-*/2 * * * * wget -O - http://localhost/cron/key1/MDMwN2Q3OGRiYmM4Y2RkOWZjNTBmMzA4MzViZDZiNjQ=/attacks/true >/dev/null 2>&1
-```
-
-Or use the control panel your host may provide.
+| | |
+| --- | --- |
+| **Getting started** | [Quick start](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/getting-started/quick-start/) · [Manual install](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/getting-started/manual-install/) · [Configuration](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/getting-started/configuration/) · [Cron jobs](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/getting-started/cron-jobs/) |
+| **Playing** | [Features](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/game/features/) · [Mission console](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/game/missions/) · [Screenshots](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/game/screenshots/) |
+| **Running a server** | [Admin panel](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/admin/admin-panel/) · [Mission designer](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/admin/mission-designer/) · [Deployment](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/admin/deployment/) · [Troubleshooting](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/admin/troubleshooting/) |
+| **Development** | [Architecture](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/development/architecture/) · [Game content](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/development/game-content/) · [Testing & CI](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/development/testing/) · [Contributing](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/development/contributing/) |
 
 ## Screenshots
 
-### main page
-![Screenshot](screens/1.jpg)
+| Missions | The Grid | Mission designer |
+| --- | --- | --- |
+| ![Mission terminal](screens/3.jpg) | ![The Grid](screens/6.jpg) | ![Mission designer](screens/7.jpg) |
 
-### player dashboard
-![Screenshot](screens/2.jpg)
+[More screenshots →](https://nenuadrian.github.io/secret-republic-browser-based-cyber-security-rpg-v3/game/screenshots/)
 
-### mission
-![Screenshot](screens/3.jpg)
+## Development
 
-### organization
-![Screenshot](screens/4.jpg)
-
-### skills
-![Screenshot](screens/5.jpg)
-
-### the grid
-![Screenshot](screens/6.jpg)
-
-### mission designer
-![Screenshot](screens/7.jpg)
-
-![Screenshot](screens/8.jpg)
-
-![Screenshot](screens/9.jpg)
-
-### forum
-![Screenshot](screens/10.jpg)
-
-![Screenshot](screens/11.jpg)
-
-
-## Framework details
-
-Sadly it was built from scratch, combining vanilla PHP, the Smarty template engine and a few libraries (composer.json). It makes use of Smarty caching.
-
-Lint:
-```
-./includes/vendor/bin/phplint --exclude=vendor  --no-cache -v
+```bash
+composer install
+composer lint     # syntax + deprecation check
+composer test     # PHPUnit
+tests/smoke.sh    # end-to-end check against a running container
 ```
 
-### ~MVC Architecture
+The docs site is an Astro + Starlight project in [`docs/`](docs) (`cd docs && npm install && npm run dev`).
 
-TBC
+## V4
 
-### Routing
-
-Is done based on the `includes/modules` folder. Adding a new module file say helloworld.php, will allow `http://localhost/helloworld` to work. 
-
-Something such as `http://localhost/helloworld/hacker/test` will pass the value test in `$GET["hacker"]`.
-
-Any variables `http://localhost/helloworld/hi?attach=2` would be passed in `$GET["attack"]`.
-
-This all happens in `public_html/index.php`.
-
-### Creating new missions
-
-Please refer to the the GUIDES folder in this repository. In contains instructions of what can be used within the Mission descriptions to benefit from dynamic IP generation between missions and other useful instructions, tips and tricks.
-
-### Adding skills, ablitites or tutorial steps
-
-Check the `includes/constants` folder.
-
-#### Tutorial steps
-
-Modify `includes/constants/tutorial.php`.
-
-When adding or modifying a step also check if you need to add or modify a `tutorial_step_N_check` function in the same file, where N is the number of the step you have added or modified within `tutorial.php`.
-
-### New pages with minimal functionality
-
-This is as simple as create a `.tpl` file in `templates/pages`.
-
-The easiest starting point is creating a copy of the `template.tpl` file which is within the same directory.
-
-As soon as it is created, the page will be available at `/pages/NAME` e.g. `http://localhost/pages/template`.
-
-## Tests
-
-```
-./includes/vendor/phpunit/phpunit/phpunit tests
-```
+[Secret Republic V4](https://github.com/nenuadrian/secret-republic-browser-based-cyber-security-rpg-v4) is
+newer and mobile-first, but has far fewer features.
 
 ## Contributors
 
-If your pull request is merged, I will add your name here. Thank you for your contribution!
+- [nenuadrian](https://github.com/nenuadrian): creator and main developer
+- [SKSaki](https://github.com/SKSaki): first player and bug finder
+- [oppiet30](https://github.com/oppiet30): PHP 8 and MySQL strict-mode fixes, SMTP settings, Smarty and release fixes
 
-   * [nenuadrian](https://github.com/nenuadrian) - main developer
-   * [SKSaki](https://github.com/SKSaki) - initial user and bug-finder
+If your pull request is merged, you'll be added here. Thank you!
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
-
-Please link and contribute back to this repository if using the code or assets :)
-
-
+[MIT](LICENSE). Please link back to this repository and contribute improvements upstream if you use the
+code or assets. Read about [the journey of this project](https://medium.com/@adrian.n/secret-republic-open-sourced-hacker-simulation-futuristic-rpg-browser-based-game-php-843d393cb9d7)
+or listen to the [audio trailer](https://www.youtube.com/watch?v=6thfiGb-b7c).

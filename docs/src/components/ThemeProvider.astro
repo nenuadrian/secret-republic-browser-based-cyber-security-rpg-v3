@@ -1,0 +1,11 @@
+---
+/**
+ * Secret Republic docs are dark-only, like the game itself.
+ * Replaces Starlight's light/dark/auto provider.
+ */
+---
+
+<script is:inline>
+	document.documentElement.dataset.theme = 'dark';
+	window.StarlightThemeProvider = { updatePickers() {} };
+</script>

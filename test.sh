@@ -2,4 +2,5 @@
 set -euo pipefail
 
 composer install --prefer-dist --no-interaction --no-progress
+composer lint
 composer test

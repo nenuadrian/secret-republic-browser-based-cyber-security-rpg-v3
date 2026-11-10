@@ -446,118 +446,6 @@ CREATE TABLE `hackdown_rankings_zones` (
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `hacker_quotes` (
-  `quote_id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `quote` varchar(300) DEFAULT NULL,
-  `author` varchar(50) DEFAULT NULL,
-  `created` int(11) DEFAULT NULL,
-  `visible` tinyint(1) NOT NULL DEFAULT '0',
-  `source` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `hacker_quotes` (`quote_id`, `user_id`, `quote`, `author`, `created`, `visible`, `source`) VALUES
-(1, 1559, 'If at first you don&rsquo;t succeed; call it version 1.0.', NULL, 1395571548, 1, NULL),
-(2, 1559, 'My software never has bugs. It just develops random features.', NULL, 1395571548, 1, NULL),
-(3, 1559, 'I would love to change the world, but they won&rsquo;t give me the source code.', NULL, 1395571548, 1, NULL),
-(4, 1559, 'The code that is the hardest to debug is the code that you know cannot possibly be wrong.', NULL, 1395571548, 1, NULL),
-(5, 1559, 'Beware of programmers that carry screwdrivers.', NULL, 1395571548, 1, NULL),
-(6, 1559, 'Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the Universe trying to produce bigger and better idiots. So far, the Universe is winning.', NULL, 1395571548, 1, NULL),
-(7, 1559, 'The beginning of the programmer&rsquo;s wisdom is understanding the difference between getting program to run and having a runnable program.', NULL, 1395571548, 1, NULL),
-(8, 1559, 'I&rsquo;m not anti-social; I&rsquo;m just not user friendly.', NULL, 1395571548, 1, NULL),
-(9, 1559, 'If Ruby is not and Perl is the answer, you don&rsquo;t understand the question.', NULL, 1395571548, 1, NULL),
-(10, 1559, 'COBOL programmers understand why women hate periods.', NULL, 1395571548, 1, NULL),
-(11, 1559, 'If you give someone a program, you will frustrate them for a day; if you teach them how to program, you will frustrate them for a lifetime.', NULL, 1395571548, 1, NULL),
-(12, 1559, 'Programmers are tools for converting caffeine into code.', NULL, 1395571548, 1, NULL),
-(13, 1559, 'My attitude isn&rsquo;t bad. It&rsquo;s in beta.', NULL, 1395571548, 1, NULL),
-(14, 1559, 'Why do programmers confuse Christmas with Halloween? Because Dec 25 = Oct 31', NULL, 1395571548, 1, NULL),
-(15, 1559, 'The box said &lsquo;Requires Windows Vista or better&rsquo;. So I installed LINUX.', NULL, 1395571548, 1, NULL),
-(16, 1559, 'UNIX is basically a simple operating system, but you have to be a genius to understand the simplicity.', NULL, 1395571548, 1, NULL),
-(17, 1559, 'In a world without fences and walls, who needs Gates and Windows?', NULL, 1395571548, 1, NULL),
-(18, 1559, 'Bugs come in through open Windows.', NULL, 1395571548, 1, NULL),
-(19, 1559, 'Penguins love cold, they wont survive the sun.', NULL, 1395571548, 1, NULL),
-(20, 1559, 'Unix is user friendly. It&rsquo;s just selective about who its friends are.', NULL, 1395571548, 1, NULL),
-(21, 1559, 'Failure is not an option. It comes bundled with your Microsoft product.', NULL, 1395571548, 1, NULL),
-(22, 1559, 'NT is the only OS that has caused me to beat a piece of hardware to death with my bare hands.', NULL, 1395571548, 1, NULL),
-(23, 1559, 'My daily Unix command list: unzip; strip; touch; finger; mount; fsck; more; yes; unmount; sleep.', NULL, 1395571548, 1, NULL),
-(24, 1559, 'Microsoft: &ldquo;You&rsquo;ve got questions. We&rsquo;ve got dancing paperclips.&rdquo;', NULL, 1395571548, 1, NULL),
-(25, 1559, 'Windows isn&rsquo;t a virus, viruses do something.', NULL, 1395571548, 1, NULL),
-(26, 1559, 'Computers are like air conditioners: they stop working when you open Windows.', NULL, 1395571548, 1, NULL),
-(27, 1559, 'Mac users swear by their Mac, PC users swear at their PC.', NULL, 1395571548, 1, NULL),
-(28, 1559, 'The truth is out there. Anybody got the URL?', NULL, 1395571548, 1, NULL),
-(29, 1559, 'The Internet: where men are men, women are men, and children are FBI agents.', NULL, 1395571548, 1, NULL),
-(30, 1559, 'Some things Man was never meant to know. For everything else, there&rsquo;s Google.', NULL, 1395571548, 1, NULL),
-(31, 1559, 'The definition of an upgrade: Take old bugs out, put new ones in.', NULL, 1395571548, 1, NULL),
-(32, 1559, 'To error is human, but for a real disaster you need a computer.', NULL, 1395571548, 1, NULL),
-(33, 1559, 'You make my software turn to hardware!', NULL, 1395571548, 1, NULL),
-(34, 1559, 'You think you know when you learn, are more sure when you can write, even more when you can teach, but certain when you can program.', NULL, 1395571548, 1, NULL),
-(35, 1559, 'There are only 10 types of people in the world: those that understand binary and those that don&rsquo;t.', NULL, 1395571548, 1, NULL),
-(36, 1559, 'Computers make very fast, very accurate mistakes.', NULL, 1395571548, 1, NULL),
-(37, 1559, 'Be nice to the nerds, for all you know they might be the next Bill Gates!', NULL, 1395571548, 1, NULL),
-(38, 1559, 'Artificial intelligence usually beats real stupidity.', NULL, 1395571548, 1, NULL),
-(39, 1559, 'To err is human &ndash; and to blame it on a computer is even more so.', NULL, 1395571548, 1, NULL),
-(40, 1559, 'CAPS LOCK &ndash; Preventing Login Since 1980.', NULL, 1395571548, 1, NULL),
-(41, 1559, '2 + 2 = 5, for extremely large values of 2.', NULL, 1395571548, 1, NULL),
-(42, 1559, 'Do you program in Assembly? she asked. NOP, he said.', NULL, 1395571548, 1, NULL),
-(43, 1559, 'Enter any 11-digit prime number to continue.', NULL, 1395571548, 1, NULL),
-(44, 1559, 'E-mail returned to sender, insufficient voltage.', NULL, 1395571548, 1, NULL),
-(45, 1559, 'All wiyht. Rho sritched mg kegtops awound?', NULL, 1395571548, 1, NULL),
-(46, 1559, 'Black holes are where God divided by zero.', NULL, 1395571548, 1, NULL),
-(47, 1559, 'If I wanted a warm fuzzy feeling, I&rsquo;d antialias my graphics!', NULL, 1395571548, 1, NULL),
-(48, 1559, 'If brute force doesn&rsquo;t solve your problems, then you aren&rsquo;t using enough.', NULL, 1395571548, 1, NULL),
-(49, 1559, 'Evolution is God&rsquo;s way of issuing upgrades.', NULL, 1395571548, 1, NULL),
-(50, 1559, 'Linus Torvalds: &ldquo;Real men don&rsquo;t use backups, they post their stuff on a public ftp server and let the rest of the world make copies.&rdquo;', NULL, 1395571548, 1, NULL),
-(51, 1559, 'Hacking is like sex. You get in, you get out, and hope that you didn&rsquo;t leave something that can be traced back to you.', NULL, 1395571548, 1, NULL),
-(52, 1559, 'A computer makes as many mistakes in one second as three men working for thirty years straight.', NULL, 1395571548, 1, NULL),
-(53, 1559, 'A computer program does what you tell it to do, not what you want it to do.', NULL, 1395571548, 1, NULL),
-(54, 1559, 'A computer program will always do what you tell it to do, but rarely what you want to do.', NULL, 1395571548, 1, NULL),
-(55, 1559, 'A computer scientist is someone who fixes things that aren&rsquo;t broken.', NULL, 1395571548, 1, NULL),
-(56, 1559, 'Compute Science is the closes thing we have to a super power.', NULL, 1395571548, 1, NULL),
-(57, 1559, 'A misplaced decimal point will always end up where it will do the greatest damage.', NULL, 1395571548, 1, NULL),
-(58, 1559, 'According to my calculations, this problem doesn&rsquo;t exist.', NULL, 1395571548, 1, NULL),
-(59, 1559, 'As a computer, I find your faith in technology amusing.', NULL, 1395571548, 1, NULL),
-(60, 1559, 'As far as the laws of mathematics refer to reality, they are not certain, and as far as they are certain, they do not refer to reality.', NULL, 1395571548, 1, NULL),
-(61, 1559, 'Programmers are tools for converting caffeine into code.', NULL, 1395571548, 1, NULL),
-(62, 1559, 'If brute force doesn&rsquo;t solve your problems, then you aren&rsquo;t using enough.', NULL, 1395571548, 1, NULL),
-(63, 1559, 'If builders built buildings the way programmers write programs, then the first woodpecker that came along would destroy civilization.', NULL, 1395571548, 1, NULL),
-(64, 1559, 'Before software can be reusable it first has to be usable.', NULL, 1395571548, 1, NULL),
-(65, 1559, 'Computers are unreliable, but humans are even more.', NULL, 1395571548, 1, NULL),
-(66, 1559, 'Computers do not solve problems, they execute solutions.', NULL, 1395571548, 1, NULL),
-(67, 1559, 'Computers make very fast, very accurate mistakes.', NULL, 1395571548, 1, NULL),
-(68, 1559, 'File not found. Should I fake it? (Y/N)', NULL, 1395571548, 1, NULL),
-(69, 1559, 'If debugging is the process of removing software bugs, then programming must be the process of putting them in.', NULL, 1395571548, 1, NULL),
-(70, 1559, 'If you torture the data enough, it will confess.', NULL, 1395571548, 1, NULL),
-(71, 1559, 'There are three kinds of people: those who can count and those who can&rsquo;t.', NULL, 1395571548, 1, NULL),
-(72, 1559, 'Latest survey shows that 3 out of 4 people make up 75% of the world&rsquo;s population.', NULL, 1395571548, 1, NULL),
-(73, 1559, 'Hand over the calculator, friends don&rsquo;t let friends derive drunk.', NULL, 1395571548, 1, NULL),
-(74, 1559, 'An infinite crowd of mathematicians enters a bar. The first one orders a  pint, the second one a half pint, the third one a quarter pint&hellip; &ldquo;I  understand&rdquo;, says the bartender &ndash; and pours two pints.', NULL, 1395571548, 1, NULL),
-(75, 1559, 'It is not the computer\'s fault that Maxwell\'s equations are not adequate to design the electric motor.', 'Alan J. Perlis', 1395571730, 1, 'hackersays.com'),
-(76, 1559, 'I do not fear computers. I fear the lack of them.', 'Isaac Asimov', 1395571730, 1, 'hackersays.com'),
-(77, 1559, 'Measuring programming progress by lines of code is like measuring aircraft building progress by weight.', 'Bill Gates', 1395571730, 1, 'hackersays.com'),
-(78, 1559, 'Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.', 'Conway\'s Law', 1395571730, 1, 'hackersays.com'),
-(79, 1559, 'If you\'ve seen one picture of the Mandelbrot Set, you\'ve seen them all.', 'Bill Karwin', 1395571730, 1, 'hackersays.com'),
-(80, 1559, 'You\'re never done, you just run out of time.', 'Anonymous', 1395571730, 1, 'hackersays.com'),
-(81, 1559, 'We kid ourselves if we think that the ratio of procedure to data in an active data-base system can be made arbitrarily small or even kept small.', 'Alan J. Perlis', 1395571730, 1, 'hackersays.com'),
-(82, 1559, 'The more bizarre the behavior, the more stupid the mistake.', 'Ed\'s Law of Debugging', 1395571730, 1, 'hackersays.com'),
-(83, 1559, 'Multi-threading is the art of screwing things up before, during or after something else.', 'Anonymous', 1395571730, 1, 'hackersays.com'),
-(84, 1559, 'You think you know when you can learn, are more sure when you can write, even more when you can teach, but certain when you can program.', 'Alan J. Perlis', 1395571735, 1, 'hackersays.com'),
-(85, 1559, 'Good judgement is the result of experience ... Experience is the result of bad judgement.', 'Fred Brooks', 1395571735, 1, 'hackersays.com'),
-(86, 1559, 'Intellectuals solve problems; geniuses prevent them.', 'Albert Einstein', 1395571735, 1, 'hackersays.com'),
-(87, 1559, 'This is important, and a little hard to understand. English is useful because it\'s a mess. Since English is a mess, it maps well onto the problem space, which is also a mess, which we call reality. Similarly, Perl was designed to be a mess (though in the nicest of possible ways).', 'Larry Wall', 1395571735, 1, 'hackersays.com'),
-(88, 1559, 'Never underestimate the disparity between developer excitement and user apathy.', 'Anonymous', 1395571735, 1, 'hackersays.com'),
-(89, 1559, 'Around computers it is difficult to find the correct unit of time to measure progress. Some cathedrals took a century to complete. Can you imagine the grandeur and scope of a program that would take as long?', 'Alan J. Perlis', 1395571735, 1, 'hackersays.com'),
-(90, 1559, 'I was a C++ programmer before I started designing Ruby. I programmed in C++ exclusively for two or three years. And after two years of C++ programming, it still surprised me.', 'Matz', 1395571735, 1, 'hackersays.com'),
-(91, 1559, 'Tell me what you need and I\'ll tell you how to get along without it.', 'Anonymous', 1395571735, 1, 'hackersays.com'),
-(92, 1559, 'One does not learn computing by using a hand calculator, but one can forget arithmetic.', 'Alan J. Perlis', 1395571735, 1, 'hackersays.com'),
-(93, 1559, '... what society overwhelmingly asks for is snake oil. Of course, the snake oil has the most impressive names &mdash; otherwise you would be selling nothing &mdash; like &quot;Structured Analysis and Design&quot;, &quot;Software Engineering&quot;, &quot;Maturity Models&quot;, &quot;Management Inform', 'Edsger W. Dijkstra', 1395571735, 1, 'hackersays.com'),
-(94, 1559, 'Think twice before you start programming or you will program twice before you start thinking.', 'Anonymous', 1395571737, 1, 'hackersays.com'),
-(95, 1559, 'Ready, fire, aim: the fast approach to software development.&lt;br&gt;Ready, aim, aim, aim, aim: the slow approach to software development. &lt;br&gt;', 'Anonymous', 1395571737, 1, 'hackersays.com'),
-(96, 1559, 'The idea that I can be presented with a problem, set out to logically solve it with the tools at hand, and wind up with a program that could not be legally used because someone else followed the same logical steps some years ago and filed for a patent on it is horrifying.', 'John Carmack on software patents', 1395571738, 1, 'hackersays.com'),
-(97, 1559, 'I went to school to learn how to program software applications, which inevitably have bug defects. There was no course at my university on testing, debugging, profiling, or optimization. These things you have to learn on your own, usually in a tight deadline.', 'Juixe TechKnow', 1395571738, 1, 'hackersays.com'),
-(98, 1559, 'Hardware is the part of a system you can kick. Software is the one you can only curse at.', 'Anonymous', 1395571738, 1, 'hackersays.com'),
-(99, 1559, 'FORTRAN is not a flower but a weed &mdash; it is hardy, occasionally blooms, and grows in every computer.', 'Alan J. Perlis', 1395571738, 1, 'hackersays.com'),
-(100, 1559, 'Memory is like an orgasm. It\'s a lot better if you don\'t have to fake it.', 'Seymour Cray on virtual memory', 1395571738, 1, 'hackersays.com');
-
 CREATE TABLE `level_rewards` (
   `level_id` int(11) NOT NULL,
   `money` int(11) DEFAULT NULL,
@@ -697,6 +585,20 @@ CREATE TABLE `org_ranks` (
   `manageHackingPoints` tinyint(1) NOT NULL DEFAULT '0',
   `rank_order` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `org_ranks` (`rank_id`, `name`, `created`, `org_id`, `default_rank`, `owner_rank`, `viewMembers`, `manageMembers`, `manageRanks`, `manageOrganization`, `messageAll`, `manageApplications`, `manageWars`, `forumManager`, `manageHackingPoints`, `rank_order`) VALUES
+(1, 'Owner', 1420070400, 98, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(2, 'Members', 1420070400, 98, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(3, 'Owner', 1420070400, 100, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(4, 'Members', 1420070400, 100, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(5, 'Owner', 1420070400, 101, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(6, 'Members', 1420070400, 101, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(7, 'Owner', 1420070400, 102, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(8, 'Members', 1420070400, 102, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(9, 'Owner', 1420070400, 103, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(10, 'Members', 1420070400, 103, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(11, 'Owner', 1420070400, 104, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(12, 'Members', 1420070400, 104, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2);
 
 CREATE TABLE `org_wars` (
   `war_id` int(11) UNSIGNED NOT NULL,
@@ -3028,9 +2930,6 @@ ALTER TABLE `hackdown_rankings_users`
 ALTER TABLE `hackdown_rankings_zones`
   ADD PRIMARY KEY (`ranking_id`);
 
-ALTER TABLE `hacker_quotes`
-  ADD PRIMARY KEY (`quote_id`);
-
 ALTER TABLE `notes`
   ADD PRIMARY KEY (`note_id`);
 
@@ -3320,9 +3219,6 @@ ALTER TABLE `hackdown_rankings_users`
 
 ALTER TABLE `hackdown_rankings_zones`
   MODIFY `ranking_id` int(11) NOT NULL AUTO_INCREMENT;
-
-ALTER TABLE `hacker_quotes`
-  MODIFY `quote_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=703;
 
 ALTER TABLE `notes`
   MODIFY `note_id` int(11) NOT NULL AUTO_INCREMENT;

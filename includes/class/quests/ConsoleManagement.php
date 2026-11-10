@@ -503,7 +503,7 @@ trait ConsoleManagement
   
   // given a trace amount
   // compute taking in account bounces
-  function increaseTraceBy($amount, $takeBounceInAccount = true, $targetIP)
+  function increaseTraceBy($amount, $takeBounceInAccount, $targetIP)
   {
     $perServerAmount = $amount;
     if ($takeBounceInAccount)
